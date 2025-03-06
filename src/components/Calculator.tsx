@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import styled from "styled-components";
 
 const StyledLabel = styled.label`
@@ -21,9 +21,9 @@ const StyledCalc = styled.div`
 const ButtonDiv = styled.div`
     margin: auto;
     width: 100%;
-    display: flex; 
-    flex-direction: row; 
-    align-items: center; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
     padding-left: 2vh;
     padding-right: 2vh;
@@ -42,7 +42,7 @@ const StyledButton = styled.button`
 const Output = styled.p`
     background-color: pink;
     border: .2vh solid rgb(0, 0, 0);
-    padding:1vh;
+    padding: 1vh;
     border-radius: 2vh;
     text-align: center;
     height: 6vh;
@@ -55,7 +55,7 @@ const StyledInput = styled.input`
 `
 
 const CenterDiv = styled.div`
-    width:100%;
+    width: 100%;
 `
 
 const InputDiv = styled.div`
@@ -74,7 +74,7 @@ function Calculator() {
     const [two, setTwo] = useState('');
 
 
-    const calculate = (operation: string) => {
+    const calc = (operation: String) => {
         const firstNum = Number(one);
         const twoNum = Number(two);
         let res = 0;
@@ -93,8 +93,8 @@ function Calculator() {
                 exponent *= firstNum;
             }
             res = exponent;
-        }else{
-            res=0
+        } else {
+            res = 0
         }
         setResult(res);
     };
@@ -102,39 +102,40 @@ function Calculator() {
     const clear = () => {
         setOne('');
         setResult('');
+
         setTwo('');
+    };
+
+    const resultNegative = (result: string | number): boolean => {
+        return Number(result) < 0;
     };
 
     return (
         <StyledCalc>
             <CenterDiv>
                 <InputDiv>
-                <StyledLabel htmlFor="num1"></StyledLabel>
-                <StyledInput
-                    type="text"
-                    id="num1"
-                    value={one}
-                    onChange={(e) => setOne(e.target.value)}
-                    placeholder=""/>
-                <StyledLabel htmlFor="num2"></StyledLabel>
-                <StyledInput
-                    type="text"
-                    id="num2"
-                    value={two}
-                    onChange={(e) => setTwo(e.target.value)}
-                    placeholder=""/>
+                    <StyledLabel htmlFor="num1"></StyledLabel>
+                    <StyledInput
+                        type="text"
+                        id="num1" value={one} onChange={(e) => setOne(e.target.value)}
+                        placeholder=""/>
+                    <StyledLabel htmlFor="num2"></StyledLabel>
+                    <StyledInput
+                        type="text"
+                        id="num2" value={two} onChange={(e) => setTwo(e.target.value)}
+                        placeholder=""/>
                 </InputDiv>
-            <ButtonDiv>
-                <StyledButton onClick={() => calculate('+')}>+</StyledButton>
-                <StyledButton onClick={() => calculate('-')}>-</StyledButton>
-                <StyledButton onClick={() => calculate('x')}>x</StyledButton>
-                <StyledButton onClick={() => calculate('/')}>/</StyledButton>
-                <StyledButton onClick={() => calculate('^')}>^</StyledButton>
-                <StyledButton onClick={clear}>Clear</StyledButton>
-            </ButtonDiv>
+                <ButtonDiv>
+                    <StyledButton onClick={() => calc('+')}>+</StyledButton>
+                    <StyledButton onClick={() => calc('-')}>-</StyledButton>
+                    <StyledButton onClick={() => calc('x')}>x</StyledButton>
+                    <StyledButton onClick={() => calc('/')}>/</StyledButton>
+                    <StyledButton onClick={() => calc('^')}>^</StyledButton>
+                    <StyledButton onClick={clear}>Clear</StyledButton>
+                </ButtonDiv>
             </CenterDiv>
-
-            <Output>{result}</Output>
+            {/* adapted from: https://www.w3schools.com/react/react_css.asp*/}
+            <Output><p style={{ color: resultNegative(result) ? 'red' : 'black' }}>{result}</p></Output>
         </StyledCalc>
     );
 }
